@@ -35,6 +35,8 @@ class MyHomePageState extends State<MyHomePage> {
   final _field1Controller = TextEditingController();
   final _field2Controller = TextEditingController();
 
+  bool isChecked = false;
+
   @override
   void dispose() {
     _field1Controller.dispose();
@@ -156,7 +158,16 @@ class MyHomePageState extends State<MyHomePage> {
                       },
                     ),
                     const SizedBox(height: 30),
-                    const DropdownForm(), //Adiciona o DropdownForm aqui
+                    const DropdownForm(),
+                    const SizedBox(height: 30),
+                    const Text('Selecionar: '),
+                    Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value ?? false;
+                          });
+                        }) //Adiciona o DropdownForm aqui
                   ],
                 ),
               ),
