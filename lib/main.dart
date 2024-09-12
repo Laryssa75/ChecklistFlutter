@@ -27,6 +27,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  //Varável para armazenar o valor selecionado
+  String _selectedOption = 'Ativo';
+
   final _formKey = GlobalKey<FormState>();
 
   String? _nome;
@@ -167,15 +170,56 @@ class MyHomePageState extends State<MyHomePage> {
                           setState(() {
                             isChecked = value ?? false;
                           });
-                        }) //Adiciona o DropdownForm aqui
+                        })
                   ],
                 ),
               ),
               const SizedBox(height: 30),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      'Qual a situação do funcionário?',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text('Admitido'),
+                      leading: Radio<String>(
+                        value: 'Ativo',
+                        groupValue: _selectedOption,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _selectedOption = value!;
+                          });
+                        },
+                      ),
+                    ),
+                    //const SizedBox(height: 10)),
+                    ListTile(
+                      title: const Text('Demitido'),
+                      leading: Radio<String>(
+                        value: 'Demitido',
+                        groupValue: _selectedOption,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _selectedOption = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: _submitForm,
                 child: const Text('Enviar'),
               ),
+              const SizedBox(height: 40),
             ],
           ),
         ),
