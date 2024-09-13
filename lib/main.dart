@@ -177,7 +177,7 @@ class MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 30),
               Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     const Text(
                       'Qual a situação do funcionário?',
@@ -186,29 +186,36 @@ class MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    ListTile(
-                      title: const Text('Admitido'),
-                      leading: Radio<String>(
-                        value: 'Ativo',
-                        groupValue: _selectedOption,
-                        onChanged: (String? value) {
-                          setState(() {
-                            _selectedOption = value!;
-                          });
-                        },
-                      ),
-                    ),
-                    //const SizedBox(height: 10)),
-                    ListTile(
-                      title: const Text('Demitido'),
-                      leading: Radio<String>(
-                        value: 'Demitido',
-                        groupValue: _selectedOption,
-                        onChanged: (String? value) {
-                          setState(() {
-                            _selectedOption = value!;
-                          });
-                        },
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          ListTile(
+                            title: const Text('Admitido'),
+                            leading: Radio<String>(
+                              value: 'Ativo',
+                              groupValue: _selectedOption,
+                              onChanged: (String? value) {
+                                setState(() {
+                                  _selectedOption = value!;
+                                });
+                              },
+                            ),
+                          ),
+                          //const SizedBox(height: 10)),
+                          ListTile(
+                            title: const Text('Demitido'),
+                            leading: Radio<String>(
+                              value: 'Demitido',
+                              groupValue: _selectedOption,
+                              onChanged: (String? value) {
+                                setState(() {
+                                  _selectedOption = value!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -241,12 +248,8 @@ class _DropdownFormState extends State<DropdownForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: const EdgeInsets.all(8.0),
-      // decoration: BoxDecoration(
-      //   border: Border.all(color: Colors.grey),
-      //   borderRadius: BorderRadius.circular(8.0),
-      // ), // borda em torno do titulo e da lista
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -260,33 +263,37 @@ class _DropdownFormState extends State<DropdownForm> {
           const SizedBox(height: 5.0),
           ListView.builder(
             shrinkWrap:
-                true, //para garatir que o ListView não ocupe espaço infinito
-            //itemCount: _items.length,
-            itemCount: 1,
+                true, // para garantir que o ListView não ocupe espaço infinito
+            itemCount: _selectedItems.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownButton<String>(
-                  hint: Text('Selecione uma fruta ${index + 1}'),
-                  value: _selectedItems[index],
-                  //border: OutlineInputBorder(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedItems[index] = newValue;
-                    });
-                  },
-                  // items: <DropdownMenuItem<String>>[
-                  //   DropdownMenuItem<String>(
-                  //     value: null,
-                  //     child: Text('Nenhum'),
-                  //   ),
-                  items: _items.map((String item) {
-                    return DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(item),
-                    );
-                  }).toList(),
-                  //        ],
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: DropdownButton<String>(
+                    hint: Text('Selecione uma fruta ${index + 1}'),
+                    value: _selectedItems[index],
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedItems[index] = newValue;
+                      });
+                    },
+                    items: [
+                      const DropdownMenuItem<String>(
+                        value: null,
+                        child: Text('Nenhum'),
+                      ),
+                      ..._items.map((String item) {
+                        return DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(item),
+                        );
+                      }).toList(),
+                    ],
+                  ),
                 ),
               );
             },
